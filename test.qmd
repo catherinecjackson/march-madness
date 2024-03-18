@@ -3,6 +3,7 @@
 #use the random number generator to simulate the outcome of each game
 
 using DataFrames
+using CSV
 
 Teams = ["UConn", "Stetson", "Florida Atlantic", "Northwestern", "San Diego State", "UAB", "Auburn", "Yale", "BYU", "Duquesne", "Illinois", "Morehead St.","Washington St.", "Drake", "Iowa St.","South Dakota St.","North Carolina", "Howard", "Mississippi St.","Michigan St.","Saint Mary's", "Grand Canyon", "Alabama","Charleston","Clemson","New Mexico","Baylor", "Colgate","Dayton","Nevada","Arizona","Long Beach St.","Houston","Longwood","Nebraska","A&M", "Wisconsin", "James Madison","Duke", "Vermont","Texas Tech","NC State","Kentucky","Oakland", "Florida", "Boise State/Colorado", "Marquette", "Western Kentucky", "Purdue", "Montana St./Grambling", "Utah St.","TCU","Gonzaga","McNeese","Kansas","Samford","South Carolina","Oregon", "Creighton","Akron","Texas","Virginia/Colorado St.","Tennesse","St. Peter's"]
 Seeds = [1,16,8,9,5,12,4,13,6,11,3,14,7,10,2,15,1,16,8,9,5,12,4,13,6,11,3,14,7,10,2,15,1,16,8,9,5,12,4,13,6,11,3,14,7,10,2,15,1,16,8,9,5,12,4,13,6,11,3,14,7,10,2,15]
@@ -27,7 +28,7 @@ end
 
 ```{julia}
 
-n_runs = 3;
+n_runs = 500_000;
 results = DataFrame("Bracket" => fill("", n_runs), "TotalLikelihood" => fill(0, n_runs))
 
 
@@ -341,22 +342,22 @@ for i = 1:n_runs
                 likelihood = 0.333;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "3"
-                likelihood = 0.000;
+                likelihood = 0.0;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "4"
                 likelihood = 0.041;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "5"
-                likelihood = 0.000;
+                likelihood = 0.0;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "6"
-                likelihood = 0.000;
+                likelihood = 0.0;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "7"
-                likelihood = 0.000;
+                likelihood = 0.0;
                 totallikelihood = totallikelihood + likelihood;
             else
-                println("Error")
+                println("Error Exit Round Seed 10")
             end
         elseif df[j, :Seeds] ==11
             if df[j, :ExitRound] == "1"
@@ -375,10 +376,10 @@ for i = 1:n_runs
                 likelihood = 0.086;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "6"
-                likelihood = 0.000;
+                likelihood = 0.0;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "7"
-                likelihood = 0.000;
+                likelihood = 0.0;
                 totallikelihood = totallikelihood + likelihood;
             else
                 println("Error")
@@ -397,13 +398,13 @@ for i = 1:n_runs
                 likelihood = 0.042;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "5"
-                likelihood = 0.000;
+                likelihood = 0.0;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "6"
-                likelihood = 0.000;
+                likelihood = 0.0;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "7"
-                likelihood = 0.000;
+                likelihood = 0.0;
                 totallikelihood = totallikelihood + likelihood;
             else
                 println("Error Exit Row Seed 12") 
@@ -416,19 +417,19 @@ for i = 1:n_runs
                 likelihood = 0.25;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "3"
-                likelihood = 0.000;
+                likelihood = 0.0;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "4"
-                likelihood = 0.000;
+                likelihood = 0.0;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "5"
-                likelihood = 0.000;
+                likelihood = 0.0;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "6"
-                likelihood = 0.000;
+                likelihood = 0.0;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "7"
-                likelihood = 0.000;
+                likelihood = 0.0;
                 totallikelihood = totallikelihood + likelihood;
             else
                 println("Error Exit Row Seed 13")
@@ -441,19 +442,19 @@ for i = 1:n_runs
                 likelihood = 0.043;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "3"
-                likelihood = 0.000;
+                likelihood = 0.0;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "4"
-                likelihood = 0.000;
+                likelihood = 0.0;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "5"
-                likelihood = 0.000;
+                likelihood = 0.0;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "6"
-                likelihood = 0.000;
+                likelihood = 0.0;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "7"
-                likelihood = 0.000;
+                likelihood = 0.0;
                 totallikelihood = totallikelihood + likelihood;
             else
                 println("Error Exit Row Seed 14")
@@ -472,13 +473,13 @@ for i = 1:n_runs
                 likelihood = 0.041;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "5"
-                likelihood = 0.000;
+                likelihood = 0.0;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "6"
-                likelihood = 0.000;
+                likelihood = 0.0;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "7"
-                likelihood = 0.000;
+                likelihood = 0.0;
                 totallikelihood = totallikelihood + likelihood;
             else
                 println("Error Exit Row")
@@ -491,19 +492,19 @@ for i = 1:n_runs
                 likelihood = 0.083;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "3"
-                likelihood = 0.000;
+                likelihood = 0.0;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "4"
-                likelihood = 0.000;
+                likelihood = 0.0;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "5"
-                likelihood = 0.000;
+                likelihood = 0.0;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "6"
-                likelihood = 0.000;
+                likelihood = 0.0;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "7"
-                likelihood = 0.000;
+                likelihood = 0.0;
                 totallikelihood = totallikelihood + likelihood;
             else
                 println("Error Exit Row")
@@ -514,9 +515,10 @@ for i = 1:n_runs
     end
 
     roundtotallikelihood = round(totallikelihood)
-    results[i, :Bracket] = string(selectedbracket)
-    results[i, :TotalLikelihood] = roundtotallikelihood
-
+    if roundtotallikelihood > 25
+        results[i, :Bracket] = string(selectedbracket)
+        results[i, :TotalLikelihood] = roundtotallikelihood
+    end
 end
 ```
 
@@ -524,6 +526,10 @@ end
 display(results)
 # find the largest totaal likelihood in results and display the bracket
 max_likelihood = maximum(results.TotalLikelihood)
+println("The highest likelihood is ", max_likelihood)
 # show the bracket where the likelihood is the highest
 display(results.Bracket[findfirst(results.TotalLikelihood .== max_likelihood)])
+# chaange the string baack to a DataFrame
+df = CSV.read(IOBuffer(results.Bracket[findfirst(results.TotalLikelihood .== max_likelihood)][1]))
+
 ```
