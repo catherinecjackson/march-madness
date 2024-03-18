@@ -515,9 +515,13 @@ for i = 1:n_runs
     end
 
     roundtotallikelihood = round(totallikelihood)
-    if roundtotallikelihood > 25
+    if roundtotallikelihood > 27
         results[i, :Bracket] = string(selectedbracket)
         results[i, :TotalLikelihood] = roundtotallikelihood
+    end
+    # if i is a multiple of 1000
+    if i % 1000 == 0
+        println("Completed ", i, " simulations")
     end
 end
 ```
