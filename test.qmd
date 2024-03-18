@@ -28,8 +28,8 @@ end
 
 ```{julia}
 
-n_runs = 500_000;
-results = DataFrame("Bracket" => fill("", n_runs), "TotalLikelihood" => fill(0, n_runs))
+n_runs = 2_000_000;
+results = DataFrame("Bracket" => fill(DataFrame(), n_runs), "TotalLikelihood" => fill(0, n_runs))
 
 
 for i = 1:n_runs
@@ -515,8 +515,8 @@ for i = 1:n_runs
     end
 
     roundtotallikelihood = round(totallikelihood)
-    if roundtotallikelihood > 27
-        results[i, :Bracket] = string(selectedbracket)
+    if roundtotallikelihood > 28
+        results[i, :Bracket] = selectedbracket
         results[i, :TotalLikelihood] = roundtotallikelihood
     end
     # if i is a multiple of 1000
@@ -532,8 +532,6 @@ display(results)
 max_likelihood = maximum(results.TotalLikelihood)
 println("The highest likelihood is ", max_likelihood)
 # show the bracket where the likelihood is the highest
-display(results.Bracket[findfirst(results.TotalLikelihood .== max_likelihood)])
-# chaange the string baack to a DataFrame
-df = CSV.read(IOBuffer(results.Bracket[findfirst(results.TotalLikelihood .== max_likelihood)][1]))
+winningbracket = results.Bracket[findfirst(results.TotalLikelihood .== max_likelihood)]
 
 ```
