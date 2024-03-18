@@ -28,7 +28,7 @@ end
 
 ```{julia}
 
-n_runs = 10_000_000;
+n_runs = 10;
 results = DataFrame("Bracket" => fill(DataFrame(), n_runs), "TotalLikelihood" => fill(0, n_runs))
 
 
@@ -547,15 +547,16 @@ for i = 1:n_runs
         totallikelihood = totallikelihood + 0.50
     end
 
-    totallikelihood = totallikelihood * 100;
+    totallikelihood = totallikelihood * 10_000;
     roundtotallikelihood = round(totallikelihood)
-    if roundtotallikelihood > 28
+    if roundtotallikelihood > 28_000
         results[i, :Bracket] = selectedbracket
         results[i, :TotalLikelihood] = roundtotallikelihood
     end
 
-    if i % 100_000 == 0
+    if i % 10_000 == 0
         println("Completed ", i, " simulations")
+        display(selectedbracket)
     end
     
 end
