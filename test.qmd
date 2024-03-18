@@ -28,7 +28,7 @@ end
 
 ```{julia}
 
-n_runs = 2_000_000;
+n_runs = 10_000_000;
 results = DataFrame("Bracket" => fill(DataFrame(), n_runs), "TotalLikelihood" => fill(0, n_runs))
 
 
@@ -36,15 +36,15 @@ for i = 1:n_runs
 
     #### MAKE A BRACKET 
 
-    df, winner1 = matchup("UConn", "Stetson", 1)
-    df, winner2 = matchup("Florida Atlantic", "Northwestern", 1)
-    df, winner3 = matchup("San Diego State", "UAB", 1)
-    df, winner4 = matchup("Auburn", "Yale", 1)
-    df, winner5 = matchup("BYU", "Duquesne", 1)
-    df, winner6 = matchup("Illinois", "Morehead St.", 1)
-    df, winner7 = matchup("Washington St.", "Drake", 1)
-    df, winner8 = matchup("Iowa St.", "South Dakota St.", 1)
-    df, winner9 = matchup("North Carolina", "Howard", 1)
+    df, winner1  = matchup("UConn", "Stetson", 1)
+    df, winner2  = matchup("Florida Atlantic", "Northwestern", 1)
+    df, winner3  = matchup("San Diego State", "UAB", 1)
+    df, winner4  = matchup("Auburn", "Yale", 1)
+    df, winner5  = matchup("BYU", "Duquesne", 1)
+    df, winner6  = matchup("Illinois", "Morehead St.", 1)
+    df, winner7  = matchup("Washington St.", "Drake", 1)
+    df, winner8  = matchup("Iowa St.", "South Dakota St.", 1)
+    df, winner9  = matchup("North Carolina", "Howard", 1)
     df, winner10 = matchup("Mississippi St.", "Michigan St.", 1)
     df, winner11 = matchup("Saint Mary's", "Grand Canyon", 1)
     df, winner12 = matchup("Alabama", "Charleston", 1)
@@ -514,15 +514,50 @@ for i = 1:n_runs
         end
     end
 
+    idx2 = findfirst(df.Teams .== "Alabama")
+    if df[idx2, :ExitRound] > "4"
+        totallikelihood = totallikelihood + 0.75
+    end
+    idx3 = findfirst(df.Teams .== "UConn")
+    if df[idx3, :ExitRound] > "4"
+        totallikelihood = totallikelihood + 1.0
+    end
+    idx4 = findfirst(df.Teams .== "Creighton")
+    if df[idx4, :ExitRound] > "4"
+        totallikelihood = totallikelihood + 0.75
+    end
+    idx5 = findfirst(df.Teams .== "Houston")
+    if df[idx5, :ExitRound] > "4"
+        totallikelihood = totallikelihood + 0.75
+    end
+    idx6 = findfirst(df.Teams .== "Purdue")
+    if df[idx6, :ExitRound] > "3"
+        totallikelihood = totallikelihood + 0.50
+    end
+    idx7 = findfirst(df.Teams .== "Arizona")
+    if df[idx7, :ExitRound] > "3"
+        totallikelihood = totallikelihood + 0.50
+    end
+    idx8 = findfirst(df.Teams .== "Iowa St.")
+    if df[idx8, :ExitRound] > "3"
+        totallikelihood = totallikelihood + 0.50
+    end
+    idx9 = findfirst(df.Teams .== "Kentucky")
+    if df[idx9, :ExitRound] > "3"
+        totallikelihood = totallikelihood + 0.50
+    end
+
+    totallikelihood = totallikelihood * 100;
     roundtotallikelihood = round(totallikelihood)
     if roundtotallikelihood > 28
         results[i, :Bracket] = selectedbracket
         results[i, :TotalLikelihood] = roundtotallikelihood
     end
-    # if i is a multiple of 1000
-    if i % 1000 == 0
+
+    if i % 100_000 == 0
         println("Completed ", i, " simulations")
     end
+    
 end
 ```
 
@@ -531,7 +566,14 @@ display(results)
 # find the largest totaal likelihood in results and display the bracket
 max_likelihood = maximum(results.TotalLikelihood)
 println("The highest likelihood is ", max_likelihood)
-# show the bracket where the likelihood is the highest
-winningbracket = results.Bracket[findfirst(results.TotalLikelihood .== max_likelihood)]
+# Find the indices where the likelihood is the highest
+max_likelihood_indices = findall(results.TotalLikelihood .== max_likelihood)
+
+    # Display the brackets with the highest likelihood
+for idx in max_likelihood_indices
+    println("Bracket with maximum likelihood:")
+    display(results[idx, :Bracket])
+    println("--------------------------------------")
+end
 
 ```
