@@ -609,10 +609,10 @@ for i = 1:n_runs
     roundtotallikelihood = round(totallikelihood)
 
     # save the selectedbracket as selectedbracketi
-
-    results[i, :Bracket] = copy(selectedbracket);
-    results[i, :TotalLikelihood] = roundtotallikelihood;
-    
+    if totallikelihood > 280_000
+        results[i, :Bracket] = copy(selectedbracket);
+        results[i, :TotalLikelihood] = roundtotallikelihood;
+    end
 
     if i % 100_000 == 0
         println("Completed ", i, " simulations")
