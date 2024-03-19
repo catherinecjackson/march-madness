@@ -10,7 +10,7 @@ Seeds = [1,16,8,9,5,12,4,13,6,11,3,14,7,10,2,15,1,16,8,9,5,12,4,13,6,11,3,14,7,1
 df = DataFrame("Teams" => Teams, "Seeds" => Seeds, "ExitRound" => fill("", length(Teams)))
 
 
-function matchup(team1, team2, round)
+function matchuporig(team1, team2, round)
     randnumber = rand(1:2)
     if randnumber == 1
         idx = findfirst(df.Teams .== team2)  # Find the index of T2
@@ -24,16 +24,66 @@ function matchup(team1, team2, round)
     return df, winner
 end
 
+function matchup(team1, team2, round)
+    S1 = df[findfirst(df.Teams .== team1), :Seeds]
+    S2 = df[findfirst(df.Teams .== team2), :Seeds]
+    if S1 == 1 && S2 == 16
+        randnumber = rand(1:4)
+        if randnumber <= 3
+            idx = findfirst(df.Teams .== team2)  # Find the index of T2
+            df[idx, :ExitRound] = string(round)  # Update ExitRound directly
+            winner = team1
+        else
+            idx = findfirst(df.Teams .== team1)  # Find the index of T1
+            df[idx, :ExitRound] = string(round)  # Update ExitRound directly
+            winner = team2
+        end
+    elseif S1 == 2 && S2 == 15
+        randnumber = rand(1:4)
+        if randnumber <= 3
+            idx = findfirst(df.Teams .== team2)  # Find the index of T2
+            df[idx, :ExitRound] = string(round)  # Update ExitRound directly
+            winner = team1
+        else
+            idx = findfirst(df.Teams .== team1)  # Find the index of T1
+            df[idx, :ExitRound] = string(round)  # Update ExitRound directly
+            winner = team2
+        end
+    elseif (S1 - S2) > 7
+        randnumber = rand(1:4)
+        if randnumber <= 3
+            idx = findfirst(df.Teams .== team2)  # Find the index of T2
+            df[idx, :ExitRound] = string(round)  # Update ExitRound directly
+            winner = team1
+        else
+            idx = findfirst(df.Teams .== team1)  # Find the index of T1
+            df[idx, :ExitRound] = string(round)  # Update ExitRound directly
+            winner = team2
+        end
+    else
+        randnumber = rand(1:2)
+        if randnumber == 1
+            idx = findfirst(df.Teams .== team2)  # Find the index of T2
+            df[idx, :ExitRound] = string(round)  # Update ExitRound directly
+            winner = team1
+        else
+            idx = findfirst(df.Teams .== team1)  # Find the index of T1
+            df[idx, :ExitRound] = string(round)  # Update ExitRound directly
+            winner = team2
+        end
+    end
+    return df, winner
+end
+
+
 ```
 
 ```{julia}
 
-n_runs = 10;
-results = DataFrame("Bracket" => fill(DataFrame(), n_runs), "TotalLikelihood" => fill(0, n_runs))
-
+n_runs = 10_000_000
+global results = DataFrame("Bracket" => fill(DataFrame(), n_runs), "TotalLikelihood" => fill(0, n_runs))
 
 for i = 1:n_runs
-
     #### MAKE A BRACKET 
 
     df, winner1  = matchup("UConn", "Stetson", 1)
@@ -105,7 +155,10 @@ for i = 1:n_runs
 
     df, winner63 = matchup(winner61, winner62, 6)
 
-    selectedbracket = df;
+    idx = findfirst(df.Teams .== winner63)  # Find the index of T1
+    df[idx, :ExitRound] = "7"
+
+    selectedbracket = df
     totallikelihood = 0;
 
     for j = 1:64
@@ -448,13 +501,13 @@ for i = 1:n_runs
                 likelihood = 0.0;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "5"
-                likelihood = 0.0;
+                likelihood = -0.25;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "6"
-                likelihood = 0.0;
+                likelihood = -0.25;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "7"
-                likelihood = 0.0;
+                likelihood = -0.25;
                 totallikelihood = totallikelihood + likelihood;
             else
                 println("Error Exit Row Seed 14")
@@ -473,13 +526,13 @@ for i = 1:n_runs
                 likelihood = 0.041;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "5"
-                likelihood = 0.0;
+                likelihood = -0.25;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "6"
-                likelihood = 0.0;
+                likelihood = -0.25;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "7"
-                likelihood = 0.0;
+                likelihood = -0.25;
                 totallikelihood = totallikelihood + likelihood;
             else
                 println("Error Exit Row")
@@ -495,16 +548,16 @@ for i = 1:n_runs
                 likelihood = 0.0;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "4"
-                likelihood = 0.0;
+                likelihood = -0.25;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "5"
-                likelihood = 0.0;
+                likelihood = -0.25;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "6"
-                likelihood = 0.0;
+                likelihood = -0.25;
                 totallikelihood = totallikelihood + likelihood;
             elseif df[j, :ExitRound] == "7"
-                likelihood = 0.0;
+                likelihood = -0.25;
                 totallikelihood = totallikelihood + likelihood;
             else
                 println("Error Exit Row")
@@ -514,67 +567,71 @@ for i = 1:n_runs
         end
     end
 
+
     idx2 = findfirst(df.Teams .== "Alabama")
     if df[idx2, :ExitRound] > "4"
-        totallikelihood = totallikelihood + 0.75
+        totallikelihood = totallikelihood + 1.5
     end
     idx3 = findfirst(df.Teams .== "UConn")
     if df[idx3, :ExitRound] > "4"
-        totallikelihood = totallikelihood + 1.0
+        totallikelihood = totallikelihood + 1.75
     end
     idx4 = findfirst(df.Teams .== "Creighton")
     if df[idx4, :ExitRound] > "4"
-        totallikelihood = totallikelihood + 0.75
+        totallikelihood = totallikelihood + 1.5
     end
     idx5 = findfirst(df.Teams .== "Houston")
     if df[idx5, :ExitRound] > "4"
-        totallikelihood = totallikelihood + 0.75
+        totallikelihood = totallikelihood + 1.0
     end
     idx6 = findfirst(df.Teams .== "Purdue")
     if df[idx6, :ExitRound] > "3"
-        totallikelihood = totallikelihood + 0.50
+        totallikelihood = totallikelihood + 0.75
     end
     idx7 = findfirst(df.Teams .== "Arizona")
     if df[idx7, :ExitRound] > "3"
-        totallikelihood = totallikelihood + 0.50
+        totallikelihood = totallikelihood + 0.75
     end
     idx8 = findfirst(df.Teams .== "Iowa St.")
     if df[idx8, :ExitRound] > "3"
-        totallikelihood = totallikelihood + 0.50
+        totallikelihood = totallikelihood + 0.75
     end
     idx9 = findfirst(df.Teams .== "Kentucky")
     if df[idx9, :ExitRound] > "3"
-        totallikelihood = totallikelihood + 0.50
+        totallikelihood = totallikelihood + 0.75
+    end
+    idx10 = findfirst(df.Teams .== winner63)
+    if df[idx10, :Seeds] > 5
+        totallikelihood = totallikelihood - 2.0
     end
 
     totallikelihood = totallikelihood * 10_000;
     roundtotallikelihood = round(totallikelihood)
-    if roundtotallikelihood > 28_000
-        results[i, :Bracket] = selectedbracket
-        results[i, :TotalLikelihood] = roundtotallikelihood
-    end
 
-    if i % 10_000 == 0
+    # save the selectedbracket as selectedbracketi
+
+    results[i, :Bracket] = copy(selectedbracket);
+    results[i, :TotalLikelihood] = roundtotallikelihood;
+    
+
+    if i % 100_000 == 0
         println("Completed ", i, " simulations")
-        display(selectedbracket)
     end
     
 end
 ```
 
 ```{julia}
-display(results)
-# find the largest totaal likelihood in results and display the bracket
 max_likelihood = maximum(results.TotalLikelihood)
 println("The highest likelihood is ", max_likelihood)
-# Find the indices where the likelihood is the highest
 max_likelihood_indices = findall(results.TotalLikelihood .== max_likelihood)
-
-    # Display the brackets with the highest likelihood
 for idx in max_likelihood_indices
     println("Bracket with maximum likelihood:")
     display(results[idx, :Bracket])
     println("--------------------------------------")
 end
-
+# find the first bracket with the maximum likelihood
+first_max_likelihood_index = max_likelihood_indices[1]
+first_max_likelihood_bracket = results[first_max_likelihood_index, :Bracket]
 ```
+
