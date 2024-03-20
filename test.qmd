@@ -1,7 +1,4 @@
 ```{julia}
-#make a march madness bracket
-#use the random number generator to simulate the outcome of each game
-
 using DataFrames
 using CSV
 
@@ -80,7 +77,7 @@ end
 
 ```{julia}
 
-n_runs = 100_000
+n_runs = 10_000_000
 results = [];
 results = DataFrame("Bracket" => fill(DataFrame(), n_runs), "TotalLikelihood" => fill(0, n_runs))
 
@@ -631,7 +628,7 @@ for i = 1:n_runs
         results[i, :TotalLikelihood] = roundtotallikelihood;
     end
 
-    if i % 100_000 == 0
+    if i % 20_000 == 0
         println("Completed ", i, " simulations")
     end
     
