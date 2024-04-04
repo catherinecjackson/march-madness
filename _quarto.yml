@@ -26,7 +26,7 @@ echo: true
 
 format:
   html:
-    theme: spacelab
+    theme: lux
     copy-code: true
     code-overflow: wrap
     toc: true
