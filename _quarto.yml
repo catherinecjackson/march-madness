@@ -67,9 +67,4 @@ jupyter: julia-1.10
 execute:
   freeze: auto
   cache: true
-filters:
-  - reveal-auto-agenda
-auto-agenda:
-  bullets: numbered
-  heading: Today
 
