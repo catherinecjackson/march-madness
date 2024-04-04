@@ -16,23 +16,11 @@ website:
     center: |
       **Page still under construction.**
   sidebar:
-    style: docked
-    align: center
-    title: "Bracket"
-    search: true
-    tools:
-      - icon: github
-        href: "https://github.com/catherinecjackson/march-madness" # Updated for clarity
-        text: "Github Repository"
-      - icon: journal-check
-        href: "https://canvas.instructure.com" # Placeholder, replace with actual URL
-        text: "Canvas"
-    collapse-level: 1
     contents:
-      - href: index.qmd
-        text: Home
-      - href: test.qmd
-        text: Code
+      - text: "Home"
+        href: "index.qmd"
+      - text: "Code"
+        href: "test.qmd"
 
 echo: true
 
