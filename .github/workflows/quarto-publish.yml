@@ -20,5 +20,5 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
-          branch: main# GitHub Pages deployment branch
+          branch: gh-pages
           folder: .  # Folder the HTML is in. Adjust if your output is in a different folder
