@@ -1,5 +1,5 @@
 ---
-title: "{{< var course.number >}}: {{< var course.title >}}"
+title: "Bracket!"
 format: html
 ---
 
