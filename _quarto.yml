@@ -6,7 +6,7 @@ project:
 website:
   page-navigation: true
   title: "March Madness Bracket"
-  description: "My Predictions!"
+  description: "My Bracket Predictions!"
   site-url: https://catherinecjackson.github.io/march-madness/
   open-graph: true
   page-footer:
