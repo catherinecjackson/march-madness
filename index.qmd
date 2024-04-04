@@ -1,0 +1,6 @@
+---
+title: "{{< var course.number >}}: {{< var course.title >}}"
+format: html
+---
+
+This is the course website for the 
