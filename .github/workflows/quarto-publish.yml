@@ -15,7 +15,7 @@ jobs:
         uses: rspatial/quarto-setup@v2
 
       - name: Render Quarto Document
-        run: quarto render index.qmd
+        run: quarto render --to html
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.0
