@@ -1,0 +1,107 @@
+project:
+  type: website
+  preview:
+    port: 4200
+
+website:
+  page-navigation: true
+  title: "March Madness Bracket"
+  description: "My Predictions!"
+  site-url: https://catherinecjackson.github.io/march-madness/
+  open-graph: true
+
+  page-footer:
+    right: |
+      Made with [Julia](https://julialang.org) and [Quarto](https://quarto.org/)<br>
+      [View the source on {{< fa brands github >}} GitHub]({{< var course.github >}})
+
+    center: |
+      **Page still under construction.**
+
+  sidebar:
+    style: docked
+    align: center
+    title: "Bracket"
+    search: true
+    tools: 
+      - icon: github
+        href: "{{var course.github}}"
+        text: "Github Repository"
+      - icon: journal-check
+        href: "{{var course.canvas}}"
+        text: "Canvas"
+    collapse-level: 1
+    contents:
+      - href: index.qmd
+        text: Home
+
+echo: true
+
+format:
+  # customization for HTML documents (i.e., the website)
+  html:
+    theme: spacelab #spacelab #simplex
+    copy-code: true
+    code-overflow: wrap
+    toc: true
+    anchor-sections: true
+    callout-appearance: simple
+    reference-location: document
+    citations-hover: true
+    code-annotations: hover
+    code-line-numbers: true
+    html-math-method: mathjax
+    include-in-header: mathjax-config.html
+    date-format: "ddd., MMM. D"
+  
+  # customization for RevealJS (i.e., the slides)
+  revealjs:
+
+    theme: _assets/sass/slides.scss
+    
+    # page numbering
+    slide-number: c/t
+    show-slide-number: all
+    hash-type: number
+
+    # page layout and transition
+    center-title-slide: true
+    width: 1280
+    height: 720
+    transition: none
+    toc: false
+    history: false
+    menu:
+        numbers: true
+    scrollable: true
+    preview-links: auto
+    
+    # code, links, and refs
+    link-external-newwindow: true
+    citations-hover: true
+    code-annotations: below
+    
+    # math and code
+    html-math-method: mathjax
+    include-in-header: lectures/mathjax-config.html
+    date-format: "ddd., MMM. D"
+
+# references
+bibliography: "references.bib"
+csl: _assets/references/american-geophysical-union.csl
+
+# code to use
+jupyter: julia-1.10
+
+# execution options
+execute:
+  freeze: auto  
+  cache: true
+
+# reveal-auto-agenda extension
+filters:
+  - reveal-auto-agenda
+
+auto-agenda:
+  bullets: numbered
+  heading: Today
