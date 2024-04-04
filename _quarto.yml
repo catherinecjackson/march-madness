@@ -61,8 +61,6 @@ format:
     include-in-header: lectures/mathjax-config.html
     date-format: "ddd., MMM. D"
 
-bibliography: "references.bib"
-csl: _assets/references/american-geophysical-union.csl
 jupyter: julia-1.10
 execute:
   freeze: auto
