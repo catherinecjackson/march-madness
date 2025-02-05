@@ -3,4 +3,4 @@ title: "Bracket!"
 format: html
 ---
 
-This is the course website for the 
+
